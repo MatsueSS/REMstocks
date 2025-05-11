@@ -24,11 +24,11 @@ public:
     bool make_db();
     bool is_connect() const;
 
-    template<typename InType>
-    void execute(std::string&&, std::vector<InType>&&) const;
+    template<typename Container>
+    void execute(std::string, Container&&) const;
 
-    template<typename Intype, typename OutType>
-    std::vector<std::vector<OutType>> fetch(std::string&&, std::vector<Intype>&&);
+    template<typename Container, typename OutType>
+    std::vector<std::vector<OutType>> fetch(std::string, Container&&);
 
     void close();
 
@@ -36,5 +36,7 @@ private:
     PGconnPTR conn;
 
 };
+
+
 
 #endif //_POSTGRES_DB_H_
