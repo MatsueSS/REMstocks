@@ -2,7 +2,7 @@
 
 PostgresDB::PostgresDB() = default;
 
-bool PostgresDB::connect(std::string val)
+bool PostgresDB::connect(std::string&& val)
 {
     PGconn* temp_conn = PQconnectdb(val.c_str());
 
@@ -43,4 +43,18 @@ PostgresDB& PostgresDB::operator=(PostgresDB&& obj) noexcept
 
     conn = std::move(obj.conn);
     return *this;
+}
+
+bool PostgresDB::make_db(std::string&& name)
+{
+    PGresultPTR result (
+        PQexec(conn.get(), ("CREATE DATABASE " + name).c_str()),
+        [](PGresult* res){ PQclear(res); }
+    );
+
+    if(PQresultStatus(result.get()) != PGRES_COMMAND_OK){
+        return 0;
+    }
+
+    return 1;
 }

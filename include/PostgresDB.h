@@ -25,16 +25,17 @@ public:
     PostgresDB(PostgresDB&&) noexcept;
     PostgresDB& operator=(PostgresDB&&) noexcept;
 
-    bool connect(std::string);
+    bool connect(std::string&&);
 
-    // bool make_db();
+    //need pre-connect on postgres-user for make a new db
+    bool make_db(std::string&&);
     bool is_connect() const;
 
     template<typename Container>
-    bool execute(std::string, Container&&) const;
+    bool execute(std::string&&, Container&&) const;
 
     template<typename Container>
-    std::vector<std::vector<std::string>> fetch(std::string, Container&&) const;
+    std::vector<std::vector<std::string>> fetch(std::string&&, Container&&) const;
 
     void close();
 
@@ -56,7 +57,7 @@ std::vector<const char*> PostgresDB::params_transfrom(Container&& container) con
 }
 
 template<typename Container>
-bool PostgresDB::execute(std::string query, Container&& container) const
+bool PostgresDB::execute(std::string&& query, Container&& container) const
 {
     std::vector<const char*> n_params = params_transfrom(std::forward<Container>(container));
 
@@ -70,7 +71,7 @@ bool PostgresDB::execute(std::string query, Container&& container) const
 }
 
 template<typename Container>
-std::vector<std::vector<std::string>> PostgresDB::fetch(std::string query, Container&& container) const
+std::vector<std::vector<std::string>> PostgresDB::fetch(std::string&& query, Container&& container) const
 {
     std::vector<const char*> n_params = params_transfrom(std::forward<Container>(container));
 

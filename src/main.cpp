@@ -1,29 +1,23 @@
 #include <iostream>
-#include "PostgresDB.h"
+#include <memory>
+#include <array>
+
+//"dbname=loganalyzer user=matsuess password=731177889232 host=localhost port=5432"
 
 using namespace std;
 
 int main(void)
 {
-    PostgresDB db;
-    db.connect("dbname=loganalyzer user=matsuess password=731177889232 host=localhost port=5432");
+    array<char, 128> buffer;   
+    string result;
 
-    vector<vector<std::string>> result_query = db.fetch("SELECT * FROM data;", vector<std::string>{});
+    unique_ptr<FILE, decltype(&pclose)> pipe(popen("jq -r .products[].name ../res/products.json", "r"), pclose);
 
-    for(int i = 0; i < result_query.size(); i++){
-        for(int j = 0; j < result_query[0].size(); j++){
-            cout << result_query[i][j] << ' ';
-        }
-        cout << '\n';
+    while(fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr){
+        result += buffer.data();
     }
 
-    cout << db.is_connect() << '\n';
-
-    db.close();
-
-    cout << db.is_connect() << '\n';
-
-    db.close();
+    cout << result << '\n';
 
     return 0;
 }
