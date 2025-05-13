@@ -11,13 +11,15 @@ int main(void)
     array<char, 128> buffer;   
     string result;
 
-    unique_ptr<FILE, decltype(&pclose)> pipe(popen("jq -r .products[].name ../res/products.json", "r"), pclose);
+    unique_ptr<FILE, decltype(&pclose)> pipe(popen("jq -r '.products[] | {name, regular: .prices.regular}' ../res/products.json", "r"), pclose);
 
     while(fgets(buffer.data(), buffer.size(), pipe.get()) != nullptr){
         result += buffer.data();
     }
 
     cout << result << '\n';
+
+    // cout << launch_script_WO() << '\n';
 
     return 0;
 }
