@@ -1,8 +1,10 @@
 #include <iostream>
 #include <memory>
 #include <array>
+#include <fstream>
 
 #include "TelegramUser.h"
+#include "TelegramSender.h"
 
 //"dbname=loganalyzer user=matsuess password=731177889232 host=localhost port=5432"
 
