@@ -3,9 +3,6 @@
 #include <array>
 #include <fstream>
 
-#include "TelegramUser.h"
-#include "TelegramSender.h"
-
 //"dbname=loganalyzer user=matsuess password=731177889232 host=localhost port=5432"
 
 using namespace std;
@@ -24,11 +21,6 @@ int main(void)
     // cout << result << '\n';
 
     // cout << launch_script_WO() << '\n';
-
-    TelegramUser user("");
-
-    user.add_in_list("Mollis");
-    user.notify("Mollis");
 
     return 0;
 }
