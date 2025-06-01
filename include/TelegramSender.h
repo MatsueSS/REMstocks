@@ -23,14 +23,16 @@ private:
     static TelegramSender* instance;
     std::string token;
 
-    TelegramSender() = default;
+    TelegramSender();
     std::string query(std::string, type_msg, std::string);
 };
+
+size_t write_callback(void*, size_t, size_t, void*);
 
 template<typename Data, typename Type>
 std::future<std::string> TelegramSender::call(Data&& id, Type&& type, Data&& msg)
 {
-    return std::async(std::launch::async, &TelegramSender::query, get(), std::forward<Data>(id), std::forward<Type>(type), std::forward<Data>(msg));
+    return std::async(std::launch::async, &TelegramSender::query, get_instance(), std::forward<Data>(id), std::forward<Type>(type), std::forward<Data>(msg));
 }
 
 #endif // _TELEGRAM_SENDER_H_
