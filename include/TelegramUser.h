@@ -2,26 +2,37 @@
 #define _TELEGRAM_USER_H_
 
 #include <string>
+#include <unordered_set>
 
-class Observer{
-public:
-    Observer(std::string id);
-
-    virtual void notify(std::string) = 0;
-
-    std::string get_id() const;
-
-    virtual ~Observer() = default;
-protected:
-    std::string id;
-};
-
-class TelegramUser : public Observer{
+class TelegramUser{
 public:
     TelegramUser(std::string id);
 
-    void notify(std::string) override;
+    void notify(std::string);
+    std::string get_id() const;
+
+    template<typename Type>
+    void add_card(Type&&);
+
+    template<typename Type>
+    void del_card(Type&&);
+
+private:
+    std::string id;
+    std::unordered_set<std::string> cards;
 
 };
+
+template<typename Type>
+void TelegramUser::add_card(Type&& t)
+{
+    cards.emplace(std::forward<Type>(t));
+}
+
+template<typename Type>
+void TelegramUser::del_card(Type&& t)
+{
+    cards.erase(std::forward<Type>(t));
+}
 
 #endif //_TELEGRAM_USER_H_

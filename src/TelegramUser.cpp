@@ -4,9 +4,7 @@
 
 #include "TelegramSender.h"
 
-Observer::Observer(std::string id) : id(id) {}
-
-TelegramUser::TelegramUser(std::string id) : Observer(std::move(id)) {}
+TelegramUser::TelegramUser(std::string id) : id(id) {}
 
 void TelegramUser::notify(std::string sale)
 {
@@ -14,7 +12,7 @@ void TelegramUser::notify(std::string sale)
     ptr->call(id, type_msg::send, sale);
 }
 
-std::string Observer::get_id() const
+std::string TelegramUser::get_id() const
 {
     return id;
 }

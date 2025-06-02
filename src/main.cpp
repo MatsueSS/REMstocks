@@ -9,22 +9,19 @@
 
 #include "TelegramSender.h"
 #include "JsonWorker.h"
+#include "BotTelegram.h"
 
 int main(void)
 {
-    // auto ptr = TelegramSender::get_instance();
-    // ptr->call(std::string(""), type_msg::read, std::string("512291448"));
-    auto res = Json_worker::read("jq -r '.result[] | select(.message.text != null) | {text: .message.text, id: .message.from.id}' ../res/result_512291448.json");
-    for(std::string s : res)
-        std::cout << s;
+    std::string id, token;
+    std::ifstream file("../.env");
+    file >> token >> id;
 
-    for(const auto& line : res){
-        size_t pos = line.find(":");
-        if(pos != std::string::npos){
-            std::string title = line.substr(0, pos);
-            std::string data = line.substr(pos+1);
-        }
-    }
+    BotTelegram tg("512291448");
+    tg.add_user(id);
+    tg.find_user(id)->add_card("Mollis");
+    tg.notify_all("Mollis");
+    std::cout << id << '\n';
 
     return 0;
 }

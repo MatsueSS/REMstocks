@@ -7,7 +7,7 @@
 
 BotTelegram::BotTelegram(std::string offset) : offset(offset)
 {
-    std::thread t(check_msg);
+    std::thread t(&BotTelegram::check_msg, this);
     t.detach();
 }
 
