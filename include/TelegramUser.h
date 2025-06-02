@@ -8,6 +8,12 @@ class TelegramUser{
 public:
     TelegramUser(std::string id);
 
+    TelegramUser(const TelegramUser&) = delete;
+    TelegramUser& operator=(const TelegramUser&) = delete;
+
+    TelegramUser(TelegramUser&&) noexcept;
+    TelegramUser& operator=(TelegramUser&&) noexcept;
+
     void notify(std::string);
     std::string get_id() const;
 

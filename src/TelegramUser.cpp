@@ -33,3 +33,19 @@ std::string TelegramUser::get_id() const
 {
     return id;
 }
+
+TelegramUser::TelegramUser(TelegramUser&& obj) noexcept
+{
+    cards = std::move(obj.cards);
+    id = std::move(obj.id);
+}
+
+TelegramUser& TelegramUser::operator=(TelegramUser&& obj) noexcept
+{
+    if(this == &obj)
+        return *this;
+
+    cards = std::move(obj.cards);
+    id = std::move(obj.id);
+    return *this;
+}
