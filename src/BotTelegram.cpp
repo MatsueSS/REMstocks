@@ -36,3 +36,19 @@ void BotTelegram::check_msg()
         }
     }
 }
+
+BotTelegram::BotTelegram(BotTelegram&& obj) noexcept
+{
+    offset = std::move(obj.offset);
+    users = std::move(obj.users);
+}
+
+BotTelegram& BotTelegram::operator=(BotTelegram&& obj)
+{
+    if(this == &obj)
+        return *this;
+
+    offset = std::move(obj.offset);
+    users = std::move(obj.users);
+    return *this;   
+}

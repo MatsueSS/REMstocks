@@ -10,6 +10,12 @@ class BotTelegram{
 public:
     BotTelegram(std::string);
 
+    BotTelegram(const BotTelegram&) = delete;
+    BotTelegram& operator=(const BotTelegram&) = delete;
+
+    BotTelegram(BotTelegram&&) noexcept;
+    BotTelegram& operator=(BotTelegram&&) noexcept;
+
     template<typename Type>
     void notify_all(Type&&);
 
