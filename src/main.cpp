@@ -18,7 +18,7 @@ int main(void)
     std::ifstream file("../.env");
     file >> token >> id;
 
-    BotTelegram tg("512291451");
+    BotTelegram tg("512291452");
     tg.add_user(id);
     
     std::this_thread::sleep_for(std::chrono::seconds(15));

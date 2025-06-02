@@ -1,16 +1,18 @@
 #ifndef _INTERFACE_H_
 #define _INTERFACE_H_
 
+#include <memory>
+
 class BotTelegram;
 
 class Interface{
 public:
-    Interface();
+    Interface(std::string);
 
     void start();
 
 private:
-    BotTelegram* bot;
+    std::unique_ptr<BotTelegram> bot;
     
 };
 
