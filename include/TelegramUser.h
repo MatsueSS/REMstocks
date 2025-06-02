@@ -9,6 +9,8 @@ public:
 
     virtual void notify(std::string) = 0;
 
+    std::string get_id() const;
+
     virtual ~Observer() = default;
 protected:
     std::string id;

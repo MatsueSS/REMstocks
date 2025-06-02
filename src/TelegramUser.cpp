@@ -13,3 +13,8 @@ void TelegramUser::notify(std::string sale)
     auto ptr = TelegramSender::get_instance();
     ptr->call(id, type_msg::send, sale);
 }
+
+std::string Observer::get_id() const
+{
+    return id;
+}
