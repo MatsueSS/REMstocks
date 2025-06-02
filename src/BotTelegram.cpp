@@ -19,7 +19,7 @@ void BotTelegram::check_msg()
         std::this_thread::sleep_for(std::chrono::seconds(10));
         auto ptr = TelegramSender::get_instance();
         ptr->call(std::string(""), type_msg::read, std::string(offset));
-        auto v = Json_worker::read("jq -r '.result[] | select(.message.text != null) | {text: .message.text, id: .message.from.id}' ../res/result_512291451.json");
+        auto v = Json_worker::read("jq -r '.result[] | select(.message.text != null) | {text: .message.text, id: .message.from.id}' ../res/result_"+ offset +".json");
         if(!v.empty())
         {
             size_t pos1 = v[1].find(":"), pos2 = v[2].find(":");
