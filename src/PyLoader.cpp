@@ -4,5 +4,5 @@
 
 int PyLoader::script_load(std::string query)
 {
-    return system(query.c_str());
+    return WEXITSTATUS(system(query.c_str()));
 }

@@ -38,11 +38,7 @@ while low <= high:
         high = mid
         continue
 
-    print(response.status_code)
     if response.status_code == 403:
-        sys.exit(2)
-
-    if response.status_code != 200:
         sys.exit(1)
 
     new_data = response.json()

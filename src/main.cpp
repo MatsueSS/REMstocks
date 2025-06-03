@@ -8,22 +8,16 @@
 //"jq -r '.products[] | {name, regular: .prices.regular}' ../res/products.json"
 //"jq -r '.result[] | select(.message.text != null) | {text: .message.text, id: .message.from.id}' ../res/result_512291448.json"
 
-#include "TelegramSender.h"
-#include "JsonWorker.h"
-#include "BotTelegram.h"
+#include "Interface.h"
 
 int main(void)
 {
     std::string id, token;
     std::ifstream file("../.env");
     file >> token >> id;
-
-    BotTelegram tg("512291452");
-    tg.add_user(id);
     
-    std::this_thread::sleep_for(std::chrono::seconds(15));
-    tg.notify_all("2. Mollis");
-    tg.notify_all("2. Филе");
+    Interface widget("512291452");
+    widget.start();
 
     return 0;
 }

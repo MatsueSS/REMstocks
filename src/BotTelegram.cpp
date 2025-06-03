@@ -43,7 +43,7 @@ BotTelegram::BotTelegram(BotTelegram&& obj) noexcept
     users = std::move(obj.users);
 }
 
-BotTelegram& BotTelegram::operator=(BotTelegram&& obj)
+BotTelegram& BotTelegram::operator=(BotTelegram&& obj) noexcept
 {
     if(this == &obj)
         return *this;

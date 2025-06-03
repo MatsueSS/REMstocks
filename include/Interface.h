@@ -3,7 +3,7 @@
 
 #include <memory>
 
-class BotTelegram;
+#include "BotTelegram.h"
 
 class Interface{
 public:
