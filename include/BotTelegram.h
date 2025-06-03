@@ -19,6 +19,8 @@ public:
     template<typename Type>
     void notify_all(Type&&);
 
+    std::unordered_set<std::string> get_like_product() const;
+
     void check_msg();
 
     template<typename Type>

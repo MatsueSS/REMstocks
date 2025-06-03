@@ -16,7 +16,8 @@ public:
 
 private:
     std::unique_ptr<BotTelegram> bot;
-    
+    std::unordered_set<std::string> lovely_product;
+
 };
 
 #endif //_INTERFACE_H_

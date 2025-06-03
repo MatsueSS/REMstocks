@@ -23,6 +23,8 @@ public:
     template<typename Type>
     void del_card(Type&&);
 
+    std::unordered_set<std::string> get_cards() const;
+
 private:
     std::string id;
     std::unordered_set<std::string> cards;

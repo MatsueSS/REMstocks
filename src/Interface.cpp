@@ -8,6 +8,8 @@
 Interface::Interface(std::string offset)
 {
     bot = std::make_unique<BotTelegram>(offset);
+
+    lovely_product = bot->get_like_product();
 }
 
 void Interface::start()
@@ -17,9 +19,6 @@ void Interface::start()
             std::cout << "403 error\n";
             std::terminate();
         }
-        else{
-            std::cout << "All good\n";
-            std::terminate();
-        }
+        
     }
 }

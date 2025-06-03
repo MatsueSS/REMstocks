@@ -52,3 +52,13 @@ BotTelegram& BotTelegram::operator=(BotTelegram&& obj) noexcept
     users = std::move(obj.users);
     return *this;   
 }
+
+std::unordered_set<std::string> BotTelegram::get_like_product() const
+{
+    std::unordered_set<std::string> result;
+    for(const auto& user : users){
+        auto cards = user->get_cards();
+        result.insert(std::make_move_iterator(cards.begin()), std::make_move_iterator(cards.end()));
+    }
+    return result;
+}

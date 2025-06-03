@@ -8,16 +8,21 @@
 //"jq -r '.products[] | {name, regular: .prices.regular}' ../res/products.json"
 //"jq -r '.result[] | select(.message.text != null) | {text: .message.text, id: .message.from.id}' ../res/result_512291448.json"
 
-#include "Interface.h"
+#include "JsonWorker.h"
 
 int main(void)
 {
-    std::string id, token;
-    std::ifstream file("../.env");
-    file >> token >> id;
+    // std::string id, token;
+    // std::ifstream file("../.env");
+    // file >> token >> id;
     
-    Interface widget("512291452");
-    widget.start();
+    // Interface widget("512291452");
+    // widget.start();
+
+    std::vector<std::string> result = Json_worker::read("jq -r '.products[] | {name, regular: .prices.regular, discount: .prices.discount}' ../res/products1.json");
+
+    for(int i = 0; i < result.size(); i++)
+        std::cout << result[i] << '\n';
 
     return 0;
 }
