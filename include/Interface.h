@@ -9,6 +9,9 @@ class Interface{
 public:
     Interface(std::string);
 
+    Interface(const Interface&) = delete;
+    Interface& operator=(const Interface&) = delete;
+
     void start();
 
 private:
