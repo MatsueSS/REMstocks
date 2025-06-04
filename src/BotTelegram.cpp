@@ -31,6 +31,10 @@ void BotTelegram::check_msg()
                     break;
                 }
             }
+
+            long long oset = std::stoll(offset);
+            oset++;
+            offset = std::to_string(oset);
         }
     }
 }

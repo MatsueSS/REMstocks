@@ -16,12 +16,14 @@ int main(void)
     std::ifstream file("../.env");
     file >> token >> id;
 
-    BotTelegram bot("512291453");
+    BotTelegram bot("512291454");
     bot.add_user(id);
 
     std::this_thread::sleep_for(std::chrono::seconds(15));
 
     bot.notify_all("2. Mollis");
+
+    ////////////
     
     // Interface widget("512291452");
     // widget.start();
