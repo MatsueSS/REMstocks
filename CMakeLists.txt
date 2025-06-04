@@ -10,7 +10,18 @@ include_directories(${CMAKE_SOURCE_DIR}/include)
 
 link_directories(/usr/lib)
 
-file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
+#file(GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp")
+
+set(SOURCES
+    src/BotTelegram.cpp
+    src/Interface.cpp
+    src/JsonWorker.cpp
+    src/PostgresDB.cpp
+    src/PyLoader.cpp
+    src/TelegramSender.cpp
+    src/TelegramUser.cpp
+    tests/test_PostgresDB.cpp
+)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
