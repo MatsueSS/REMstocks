@@ -34,7 +34,9 @@ std::string Json_worker::erase_for_products(std::string&& str)
 {
     size_t pos = str.find(":");
     if(pos != std::string::npos){
-        str = str.substr(pos+3, str.size()-20);
+        size_t elpos = str.rfind("\"");
+        str = str.substr(pos+3, str.size()-10);
+        str = str.substr(0, elpos-1);
     }
 
     return std::move(str);
