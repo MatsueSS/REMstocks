@@ -18,6 +18,7 @@ private:
     std::unique_ptr<BotTelegram> bot;
     std::unordered_set<std::string> lovely_product;
 
+    bool control_date();
 };
 
 #endif //_INTERFACE_H_

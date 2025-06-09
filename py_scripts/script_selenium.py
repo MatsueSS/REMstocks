@@ -4,6 +4,7 @@ from datetime import datetime
 from bs4 import BeautifulSoup
 
 import json
+import sys
 import time
 
 def init_webdriver():
@@ -58,3 +59,5 @@ with open("../res/cards.json", "w", encoding="utf-8") as f:
 
 
 driver.quit()
+
+sys.exit(0)
