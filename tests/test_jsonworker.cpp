@@ -7,9 +7,9 @@
 
 int main(void)
 {
-    auto res1 = Json_worker::read("jq -r '.products[] | {name}' ../res/products1.json", type_json::products);
+    auto res1 = Json_worker::read("jq -r '.products[] | {plu}' ../res/products1.json", type_json::products);
     std::ofstream file("../res/result_test_json_worker.txt");
-    file << "Result command-type with products: jq -r '.products[] | {name}' ../res/products.json:\n";
+    file << "Result command-type with products: jq -r '.products[] | {plu}' ../res/products.json:\n";
     for(const auto& obj : res1)
         file << '\t' << obj << '\n';
 
