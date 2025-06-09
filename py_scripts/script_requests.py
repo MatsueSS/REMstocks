@@ -1,3 +1,4 @@
+from datetime import datetime
 import requests
 import json
 import sys
@@ -54,8 +55,31 @@ while low <= high:
             best_data = new_data
             low = mid + 1
 
-if best_data:
-    with open("../res/products.json", "w", encoding="utf-8") as f:
-        json.dump(best_data, f, ensure_ascii=False, indent=2)
+today_str = datetime.now().strftime("%d-%m-%Y")
+
+cards = []
+
+data = best_data
+
+for product in data.get("products", []):
+    name = product.get("name", "")
+    prices = product.get("prices", {})
+
+    regular = prices.get("regular")
+    discount = prices.get("discount")
+
+    cards.append({
+        "name": name,
+        "price": regular,
+        "sale": discount
+    })
+
+result = {
+    "date": today_str,
+    "cards": cards
+}
+
+with open("../res/cards.json", "w", encoding="utf-8") as f:
+    json.dump(result, f, ensure_ascii=False, indent=4)
 
 sys.exit(0)
