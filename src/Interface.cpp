@@ -1,13 +1,14 @@
 #include "Interface.h"
 
 #include "PyLoader.h"
-#include "JsonWorker.h"
+#include "json.hpp"
 
 #include <iostream>
-#include <chrono>
 #include <string>
 #include <sstream>
 #include <thread>
+#include <future>
+#include <iomanip>
 
 Interface::Interface(std::string offset)
 {
@@ -33,9 +34,8 @@ bool Interface::control_date()
     if(ss.fail())
         return false;
 
-    auto ymd = std::chrono::year{year}/std::chrono::month{month}/std::chrono::day{day};
-    auto today = std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now());
-    auto current_date = std::chrono::year_month_day{today};
+    auto ymd = std::chrono::year{(int)year}/std::chrono::month{month}/std::chrono::day{day};
+    auto current_date = get_date_now();
 
     std::chrono::sys_days new_date_days = std::chrono::sys_days{ymd} + std::chrono::days{7};
     std::chrono::sys_days my_date = std::chrono::sys_days{current_date};
@@ -43,17 +43,43 @@ bool Interface::control_date()
     return my_date >= new_date_days;
 }
 
+std::chrono::year_month_day Interface::get_date_now() const
+{
+    auto today = std::chrono::floor<std::chrono::days>(std::chrono::system_clock::now());
+    auto current_date = std::chrono::year_month_day{today};
+    return current_date;
+}
+
 void Interface::start()
 {
-    while(true){
-        if(control_date()){
-            int code_result_script = PyLoader::script_load("bash -c 'python3 ../py_scripts/script_requests.py'");
-            if(code_result_script == 1)
-                PyLoader::script_load("bash -c 'python3 ../py_scripts/script_selenium.py'");
+    
+    if(control_date()){
+        int code_result_script = PyLoader::script_load("bash -c 'python3 ../py_scripts/script_requests.py'");
+        if(code_result_script == 1)
+            PyLoader::script_load("bash -c 'python3 ../py_scripts/script_selenium.py'");
+        
+        PostgresDB db;
+        db.connect("dbname=remstocks user=matsuess password=731177889232 host=localhost port=5432");
+
+        std::ifstream file("../res/cards.json");
+        nlohmann::json j;
+        file >> j;
+
+        std::string date = j["date"];
+
+        for(const auto& card : j["cards"]){
+            std::string name = card["name"];
+            std::string price = card["price"];
+            std::string sale = card["sale"];
+
+            db.execute("INSERT INTO cards (name, price, discount, date) VALUES($1, $2, $3, $4)", std::vector<std::string>{name, price, sale, date});
         }
-        else{
-            std::cout << "Sales not update\n";
-        }
+        db.close();
+    }
+
+    else{
+        std::cout << "Sales not update\n";
+
         
     }
 }

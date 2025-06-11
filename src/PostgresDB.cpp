@@ -58,3 +58,7 @@ bool PostgresDB::make_db(std::string&& name)
 
     return 1;
 }
+
+PostgresDB::~PostgresDB(){
+    this->close();
+}

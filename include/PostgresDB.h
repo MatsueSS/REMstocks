@@ -39,6 +39,8 @@ public:
 
     void close();
 
+    ~PostgresDB();
+
 private:
     PGconnPTR conn;
 
