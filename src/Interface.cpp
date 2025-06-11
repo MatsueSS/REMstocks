@@ -52,7 +52,6 @@ std::chrono::year_month_day Interface::get_date_now() const
 
 void Interface::start()
 {
-    
     if(control_date()){
         int code_result_script = PyLoader::script_load("bash -c 'python3 ../py_scripts/script_requests.py'");
         if(code_result_script == 1)
@@ -69,8 +68,22 @@ void Interface::start()
 
         for(const auto& card : j["cards"]){
             std::string name = card["name"];
-            std::string price = card["price"];
-            std::string sale = card["sale"];
+            std::string str_price = card["price"];
+            std::string str_sale = card["sale"];
+
+            std::string price, sale;
+
+            for(char c : str_price)
+                if(isdigit(c))
+                    price.push_back(c);
+
+            for(char c : str_sale)
+                if(isdigit(c))
+                    sale.push_back(c);
+
+            if(lovely_product.find(name) !=  lovely_product.end()){
+                bot->notify_all(name);
+            }
 
             db.execute("INSERT INTO cards (name, price, discount, date) VALUES($1, $2, $3, $4)", std::vector<std::string>{name, price, sale, date});
         }
@@ -79,7 +92,5 @@ void Interface::start()
 
     else{
         std::cout << "Sales not update\n";
-
-        
     }
 }
