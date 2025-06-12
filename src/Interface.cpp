@@ -13,8 +13,6 @@
 Interface::Interface(std::string offset)
 {
     bot = std::make_unique<BotTelegram>(offset);
-
-    lovely_product = bot->get_like_product();
 }
 
 bool Interface::control_date()
@@ -52,7 +50,8 @@ std::chrono::year_month_day Interface::get_date_now() const
 
 bool Interface::start()
 {
-    if(control_date()){
+    bool flag = control_date();
+    if(flag){
         int code_result_script = PyLoader::script_load("bash -c 'python3 ../py_scripts/script_requests.py'");
         if(code_result_script == 1)
             PyLoader::script_load("bash -c 'python3 ../py_scripts/script_selenium.py'");
@@ -80,21 +79,30 @@ bool Interface::start()
             for(char c : str_sale)
                 if(isdigit(c))
                     sale.push_back(c);
-
-            if(lovely_product.find(name) !=  lovely_product.end()){
+            if(lovely_product.find(name) != lovely_product.end()){
                 bot->notify_all(name);
             }
 
             db.execute("INSERT INTO cards (name, price, discount, date) VALUES($1, $2, $3, $4)", std::vector<std::string>{name, price, sale, date});
         }
         db.close();
-
-        return 1;
     }
 
     else{
         std::cout << "Sales not update\n";
-        
-        return 0;
+
+        std::ifstream file("../res/cards.json");
+
+        nlohmann::json json;
+        file >> json;
+
+        for(const auto& obj : json["cards"]){
+            std::string name = obj["name"];
+
+            if(lovely_product.find(name) != lovely_product.end())
+                bot->notify_all(name);
+        }
     }
+
+    return flag;
 }

@@ -12,26 +12,21 @@
 
 int main(void)
 {
-    // std::string id, token;
-    // std::ifstream file("../.env");
-    // file >> token >> id;
+    std::string id, token;
+    std::ifstream file("../.env");
+    file >> token >> id;
 
-    // BotTelegram bot("512291454");
-    // bot.add_user(id);
+    TelegramUser user(std::move(id));
 
-    // std::this_thread::sleep_for(std::chrono::seconds(15));
+    std::ifstream nfile("../res/my_favourite_link.txt");
+    while(getline(nfile, token)){
+        user.add_card(token);
+    }
 
-    // bot.notify_all("2. Mollis");
-
-    ////////////
+    Interface widget("512291454");
+    widget.add_user(std::move(user));
     
-    Interface widget("512291452");
     widget.start();
-
-    // std::vector<std::string> result = Json_worker::read("jq -r '.products[] | {name, regular: .prices.regular, discount: .prices.discount}' ../res/products1.json", type_json::products);
-
-    // for(int i = 0; i < result.size(); i++)
-    //     std::cout << result[i] << '\n';
 
     return 0;
 }

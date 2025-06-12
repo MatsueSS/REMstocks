@@ -36,7 +36,7 @@ private:
 
 template<typename Type>
 void BotTelegram::notify_all(Type&& t)
-{
+{ 
     for(const auto& user : users)
         user->notify(std::forward<Type>(t));
 }

@@ -4,6 +4,8 @@
 #include <string>
 #include <unordered_set>
 
+#include <iostream>
+
 class TelegramUser{
 public:
     TelegramUser(std::string id);
