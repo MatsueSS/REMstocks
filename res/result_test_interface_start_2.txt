@@ -1,0 +1,7 @@
+Make a last edited
+edited for notify all clients and auth for bots for start-message
+
+-------------
+
+Now app can be notify all clients about sales at the user's request
+App can be parse sales for sites www.5ka.ru
