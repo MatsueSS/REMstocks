@@ -16,17 +16,21 @@ int main(void)
     std::ifstream file("../.env");
     file >> token >> id;
 
-    TelegramUser user(std::move(id));
-
-    std::ifstream nfile("../res/my_favourite_link.txt");
-    while(getline(nfile, token)){
-        user.add_card(token);
-    }
+    TelegramUser user(id);
 
     Interface widget("512291454");
     widget.add_user(std::move(user));
+
+    std::ifstream nfile("../res/my_favourite_link.txt");
+    while(getline(nfile, token)){
+        widget.add_card_for_concrete_user(id, token);
+    }
     
     widget.start();
+
+    while(true){
+        
+    }
 
     return 0;
 }

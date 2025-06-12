@@ -26,7 +26,6 @@ public:
 
 private:
     std::unique_ptr<BotTelegram> bot;
-    std::unordered_set<std::string> lovely_product;
 
     bool control_date();
 
@@ -36,17 +35,12 @@ private:
 template<typename type>
 void Interface::add_user(type&& obj)
 {
-    auto container_user = obj.get_cards();
-    for(auto iter = container_user.begin(); iter != container_user.end();  iter++){
-        lovely_product.insert(*iter);
-    }
     bot->add_user(std::forward<type>(obj));
 }
 
 template<typename type>
 void Interface::add_card_for_concrete_user(type&& user_id, type&& card)
 {
-    lovely_product.insert(card);
     bot->find_user(std::forward<type>(user_id))->add_card(std::forward<type>(card));
 }
 

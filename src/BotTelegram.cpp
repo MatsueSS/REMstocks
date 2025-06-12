@@ -5,6 +5,7 @@
 
 #include <thread>
 #include <iostream>
+#include <memory>
 
 BotTelegram::BotTelegram(std::string offset) : offset(offset)
 {
@@ -24,11 +25,16 @@ void BotTelegram::check_msg()
         {
             id = v[2];
             data = v[1];
-           
-            for(const auto& user : users){
-                if(user->get_id() == id){
-                    user->notify(data);
-                    break;
+
+            if(data == "start"){
+                users.emplace_back(std::make_unique<TelegramUser>(id));
+            }
+            else{
+                for(const auto& user : users){
+                    if(user->get_id() == id){
+                        user->notify(data);
+                        break;
+                    }
                 }
             }
 

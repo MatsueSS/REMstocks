@@ -2,7 +2,9 @@
 
 #include <thread>
 #include <iostream>
+#include <fstream>
 
+#include "json.hpp"
 #include "TelegramSender.h"
 
 TelegramUser::TelegramUser(std::string id) : id(id) {}
@@ -24,6 +26,22 @@ void TelegramUser::notify(std::string sale)
         }
         case 3: //make forecast
             break;
+        case 4: { //want sales
+            std::ifstream file("../res/cards.json");
+            nlohmann::json json;
+            file >> json;
+
+            for(const auto& obj : json["cards"]){
+                std::string name = obj["name"];
+
+                if(cards.find(name) != cards.end()){
+                    auto ptr = TelegramSender::get_instance();
+                    ptr->call(id, type_msg::send, name);
+                }
+            }
+
+            break;
+        }
         default:
             break;
     }

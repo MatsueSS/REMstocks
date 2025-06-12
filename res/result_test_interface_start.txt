@@ -1,0 +1,2 @@
+Result of usual 0
+Result of usual 1:0

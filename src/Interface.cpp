@@ -79,9 +79,7 @@ bool Interface::start()
             for(char c : str_sale)
                 if(isdigit(c))
                     sale.push_back(c);
-            if(lovely_product.find(name) != lovely_product.end()){
-                bot->notify_all(name);
-            }
+            bot->notify_all(name);
 
             db.execute("INSERT INTO cards (name, price, discount, date) VALUES($1, $2, $3, $4)", std::vector<std::string>{name, price, sale, date});
         }
@@ -91,17 +89,16 @@ bool Interface::start()
     else{
         std::cout << "Sales not update\n";
 
-        std::ifstream file("../res/cards.json");
+        // std::ifstream file("../res/cards.json");
 
-        nlohmann::json json;
-        file >> json;
+        // nlohmann::json json;
+        // file >> json;
 
-        for(const auto& obj : json["cards"]){
-            std::string name = obj["name"];
+        // for(const auto& obj : json["cards"]){
+        //     std::string name = obj["name"];
 
-            if(lovely_product.find(name) != lovely_product.end())
-                bot->notify_all(name);
-        }
+        //     bot->notify_all(name);
+        // }
     }
 
     return flag;

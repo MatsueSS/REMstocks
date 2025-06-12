@@ -1,0 +1,15 @@
+Open result: 1
+Exit result: 0
+Open result: 1
+Result query insert: 1
+Result fetch-command SELECT * FROM data;:
+	2 my_mail 12345 2 
+	4 git 12345 3 
+	5 git 1111 4 
+	6 vk 12345 4 
+	7 git 1111 6 
+	8 vk 1111 7 
+	9 vk 1111 8 
+	10 vk 1111 9 
+	11 test psw 2 
+	12 test psw 2 
