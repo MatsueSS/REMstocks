@@ -20,7 +20,7 @@ set(SOURCES
     src/PyLoader.cpp
     src/TelegramSender.cpp
     src/TelegramUser.cpp
-    src/main.cpp
+    tests/test_interface_start.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

@@ -50,7 +50,7 @@ std::chrono::year_month_day Interface::get_date_now() const
     return current_date;
 }
 
-void Interface::start()
+bool Interface::start()
 {
     if(control_date()){
         int code_result_script = PyLoader::script_load("bash -c 'python3 ../py_scripts/script_requests.py'");
@@ -88,9 +88,13 @@ void Interface::start()
             db.execute("INSERT INTO cards (name, price, discount, date) VALUES($1, $2, $3, $4)", std::vector<std::string>{name, price, sale, date});
         }
         db.close();
+
+        return 1;
     }
 
     else{
         std::cout << "Sales not update\n";
+        
+        return 0;
     }
 }

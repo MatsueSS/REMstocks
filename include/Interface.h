@@ -16,7 +16,7 @@ public:
     Interface(const Interface&) = delete;
     Interface& operator=(const Interface&) = delete;
 
-    void start();
+    bool start();
 
 private:
     std::unique_ptr<BotTelegram> bot;
